@@ -10,9 +10,7 @@ namespace WebApiBook.Models
     {
         private static MemoryRepository sharedRepository = new MemoryRepository();
 
-        public static MemoryRepository SharedRepository => sharedRepository;
-
-        public Book this[int id] => throw new NotImplementedException();
+        public static MemoryRepository SharedRepository => sharedRepository;       
 
         private Dictionary<int, Book> items;
         public MemoryRepository()
@@ -26,21 +24,25 @@ namespace WebApiBook.Models
             }.ForEach(r => AddBook(r));
         }
 
-        public IEnumerable<Book> Books => throw new NotImplementedException();
+        public Book this[int id] => items.ContainsKey(id) ? items[id] : null;
+
+        public IEnumerable<Book> Books => items.Values;
 
         public Book AddBook(Book book)
         {
-            throw new NotImplementedException();
+            if (book.BookId == 0)
+            {
+                int key = items.Count;
+                while (items.ContainsKey(key)) { key++; };
+                book.BookId = key;
+            }
+            items[book.BookId] = book;
+            return book;
         }
 
-        public void DeleteBook(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public void DeleteBook(int id) => items.Remove(id);
 
-        public Book Update(Book book)
-        {
-            throw new NotImplementedException();
-        }
+
+        public Book Update(Book book) => AddBook(book);
     }
 }
