@@ -8,7 +8,13 @@ namespace WebApiBook.Models
 {
     public class MemoryRepository : IRepository
     {
+        private static MemoryRepository sharedRepository = new MemoryRepository();
+
+        public static MemoryRepository SharedRepository => sharedRepository;
+
         public Book this[int id] => throw new NotImplementedException();
+
+        private Dictionary<int, Book> items;
 
         public IEnumerable<Book> Books => throw new NotImplementedException();
 
