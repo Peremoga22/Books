@@ -8,6 +8,7 @@ using WebApiBooks.Controllers;
 using Assert = NUnit.Framework.Assert;
 using System.Linq;
 
+
 namespace Tests
 {
     [TestFixture]
@@ -35,6 +36,16 @@ namespace Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(_repository[3].BookId, result.Count());
         }
+        [Test]
+        public void TestGetBooksByID_NotFound()
+        {
+            _repository = new MemoryRepository();
+            _bookController = new BookController(_repository);
+
+            var result = _bookController.GetBooks().FirstOrDefault(x => x.BookId == 999);                    
+            Assert.IsNotNull(nameof(NotFoundResult));
+        }
+       
 
     }
 }
