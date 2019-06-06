@@ -45,7 +45,24 @@ namespace Tests
             var result = _bookController.GetBooks().FirstOrDefault(x => x.BookId == 999);                    
             Assert.IsNotNull(nameof(NotFoundResult));
         }
-       
+        [Test]
+        public void TestBookPost()
+        {
+            _repository = new MemoryRepository();
+            _bookController = new BookController(_repository);
 
+            var result = _bookController.GetBooks();
+            Assert.IsTrue(_repository.Books.Any(x => x.BookId == 1));
+        }
+        [Test]
+        public void TestBookPut()
+        {
+            _repository = new MemoryRepository();
+            _bookController = new BookController(_repository);
+
+            var result = _bookController.GetBooks();
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count());
+        }
     }
 }
