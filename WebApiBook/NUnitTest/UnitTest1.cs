@@ -64,5 +64,14 @@ namespace Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(3, result.Count());
         }
+        [Test]
+        public void TestBookDelete()
+        {
+            _repository = new MemoryRepository();
+            _bookController = new BookController(_repository);
+            var result = _bookController.GetBooks().FirstOrDefault(x => x.BookId == 1); ;
+            Assert.IsNotNull(result);
+            Assert.IsTrue(_repository.Books.Any(x => x.BookId == 1));
+        }
     }
 }
