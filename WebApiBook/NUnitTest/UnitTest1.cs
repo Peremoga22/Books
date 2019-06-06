@@ -1,4 +1,4 @@
-//ing Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -24,5 +24,17 @@ namespace Tests
             var result = _bookController.GetBooks();
             Assert.AreEqual(_repository.Books.Count(), result.Count());
         }
+
+        [Test]
+        public void TestGetBooksByID()
+        {
+            _repository = new MemoryRepository();
+            _bookController = new BookController(_repository);
+
+            var result = _bookController.GetBooks() ;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(_repository[3].BookId, result.Count());
+        }
+
     }
 }
