@@ -51,8 +51,8 @@ namespace Tests
             _repository = new MemoryRepository();
             _bookController = new BookController(_repository);
 
-            var result = _repository.Post();
-            Assert.IsTrue(_repository.Books.Any(x => x.BookId == 1));
+            var result = _repository.Update(new Book());
+            Assert.AreEqual(_repository.Books.Count(),result);
         }
         [Test]
         public void TestBookPut()
@@ -76,15 +76,13 @@ namespace Tests
         [Test]
         public void CreatePostAction_ModelError()
         {
-            // arrange
             string expected = "Create";
             var mock = new Mock<IRepository>();
             Book book = new Book();
             BookController controller = new BookController(mock.Object);
-            // controller.ModelSta("Name", "Название модели не установлено");
-            // act
+            
             var result = _bookController;
-            // assert
+           
             Assert.IsNotNull(result);
             Assert.AreEqual(expected, result);
         }
