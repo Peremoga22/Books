@@ -86,5 +86,14 @@ namespace Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(expected, result);
         }
+        [Test]
+        public void IsListNotNull()
+        {
+            var mock = new Mock<IRepository>();
+            mock.Setup(a => a.Books).Returns(new List<Book>());
+            BookController controller = new BookController(mock.Object);
+
+            Assert.IsNotNull(controller);
+        }
     }
 }
